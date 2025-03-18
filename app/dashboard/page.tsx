@@ -33,7 +33,15 @@ export default function Holdings() {
 
   async function fetchPendingOrders() {
     const response = await fetch("http://localhost:3000/api/stock/orders", {
-      cache: "no-cache",
+      method:"POST",
+      headers:{
+        "Content-type":"application/json"
+      },
+      body:JSON.stringify({
+        side:"",
+        statuses:["WAIT","PARTIAL"],
+        dateRange:""
+      })
     });
 
     const res = await response.json();

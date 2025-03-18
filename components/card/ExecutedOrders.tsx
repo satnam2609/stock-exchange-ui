@@ -66,13 +66,21 @@ const MyMarketAnchor = ({
 
 export default function ExecutedOrders({ data }: { data: RawData[] }) {
   const [myMarket, setMyMarket] = useState("market");
-  const [myOrders, setMyOrders] = useState([]);
+  const [myOrders, setMyOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [is401, setIs401] = useState(false);
 
   async function getOrders() {
     const res = await fetch("/api/stock/orders",{
-      cache:"no-cache"
+      method:"POST",
+      headers:{
+        "Content-type":"application/json"
+      },
+      body:JSON.stringify({
+        side:"",
+        statuses:[],
+        dateRange:""
+      })
     });
     if (res.ok) {
       const response = await res.json();
@@ -89,7 +97,11 @@ export default function ExecutedOrders({ data }: { data: RawData[] }) {
     if (myMarket === "my") {
       setLoading(true);
       getOrders()
-        .then((data) => setMyOrders(data))
+        .then((data) => {
+          if (data instanceof Array){
+            setMyOrders(data)
+          }
+        })
         .then(() => setLoading(false));
     }
   }, [myMarket]);

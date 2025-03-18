@@ -164,7 +164,7 @@ export default function CandleStickChart({
         const volumeData = chartData.map((d) => ({
           time: d.time, // Use already adjusted timestamps
           value: d.volume, // Volume must be a valid number
-          color: d.close >= d.open ? "#5eca94" : "#FF3558",
+          color: d.close >= d.open ? "#265c41" : "#941f33",
         }));
 
          
